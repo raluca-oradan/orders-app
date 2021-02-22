@@ -28,7 +28,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
     private final String[]  WHITE_LIST = {
             "/",
             "/api/v1/login",
-            "/api/v1/register"
+            "/api/v1/restaurant/register"
     };
 
     private AppUserDetailsService appUserDetailsService;
