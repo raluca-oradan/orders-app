@@ -1,4 +1,4 @@
-package com.javaAdvanced.ordersapp.USER.exceptions;
+package com.javaAdvanced.ordersapp.EXCEPTIONS;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 

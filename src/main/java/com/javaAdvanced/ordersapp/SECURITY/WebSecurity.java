@@ -1,4 +1,4 @@
-package com.javaAdvanced.ordersapp.USER.security;
+package com.javaAdvanced.ordersapp.SECURITY;
 
 import com.javaAdvanced.ordersapp.USER.service.AppUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +28,8 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
     private final String[]  WHITE_LIST = {
             "/",
             "/api/v1/login",
-            "/api/v1/restaurant/register"
+            "/api/v1/restaurant/register",
+            "/api/v1/customer/register"
     };
 
     private AppUserDetailsService appUserDetailsService;

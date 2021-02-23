@@ -1,12 +1,10 @@
 package com.javaAdvanced.ordersapp.USER.api;
 
-import com.javaAdvanced.ordersapp.USER.dao.UserEntity;
 import com.javaAdvanced.ordersapp.USER.model.JWTmodel;
 import com.javaAdvanced.ordersapp.USER.model.LoginRequest;
-import com.javaAdvanced.ordersapp.USER.security.JWTprovider;
+import com.javaAdvanced.ordersapp.SECURITY.JWTprovider;
 import com.javaAdvanced.ordersapp.USER.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -44,12 +42,5 @@ public class AuthenticationController {
         String jwt = tokenProvider.generateJWToken(authentication);
         return ResponseEntity.ok(new JWTmodel(jwt));
     }
-
-    @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody UserDTO user) {
-        userService.createUser(user);
-        return new ResponseEntity<>(HttpStatus.CREATED);
-    }
-
 }
 

@@ -1,19 +1,18 @@
-package com.javaAdvanced.ordersapp.RESTAURANT.dao;
+package com.javaAdvanced.ordersapp.CUSTOMER.model;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.javaAdvanced.ordersapp.USER.dao.Role;
-import com.javaAdvanced.ordersapp.USER.dao.UserEntity;
+import com.javaAdvanced.ordersapp.USER.model.UserEntity;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
-@Table(name = "restaurants")
+@Table(name = "customers")
 @JsonAutoDetect
 
-public class RestaurantEntity {
+public class CustomerEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -25,16 +24,17 @@ public class RestaurantEntity {
     private String name;
 
     @Column(nullable = false)
-    private String location;
+    private String phone_number;
 
     @Column(nullable = false)
-    private String description;
+    private String address;
+
+
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     @JsonIgnore
     private UserEntity userEntity;
-
 
     public long getId() {
         return id;
@@ -60,20 +60,20 @@ public class RestaurantEntity {
         this.name = name;
     }
 
-    public String getLocation() {
-        return location;
+    public String getPhone_number() {
+        return phone_number;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setPhone_number(String phone_number) {
+        this.phone_number = phone_number;
     }
 
-    public String getDescription() {
-        return description;
+    public String getAddress() {
+        return address;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public UserEntity getUserEntity() {

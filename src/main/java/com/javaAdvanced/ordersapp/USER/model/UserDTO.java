@@ -1,4 +1,4 @@
-package com.javaAdvanced.ordersapp.USER.api;
+package com.javaAdvanced.ordersapp.USER.model;
 
 import com.javaAdvanced.ordersapp.USER.dao.Role;
 import org.springframework.beans.factory.annotation.Autowired;

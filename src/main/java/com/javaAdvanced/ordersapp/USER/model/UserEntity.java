@@ -1,7 +1,7 @@
-package com.javaAdvanced.ordersapp.USER.dao;
+package com.javaAdvanced.ordersapp.USER.model;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.javaAdvanced.ordersapp.RESTAURANT.dao.RestaurantEntity;
+import com.javaAdvanced.ordersapp.USER.dao.Role;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -18,14 +18,6 @@ public class UserEntity {
 
     @CreationTimestamp
     private Timestamp created_at;
-
-    @OneToOne(
-            mappedBy = "userEntity",
-            cascade = CascadeType.REMOVE,
-            orphanRemoval = true,
-            fetch = FetchType.EAGER
-    )
-    private RestaurantEntity restaurantEntity;
 
     @Column(nullable = false)
     private String email;
@@ -71,14 +63,6 @@ public class UserEntity {
 
     public void setCreated_at(Timestamp created_at) {
         this.created_at = created_at;
-    }
-
-    public RestaurantEntity getRestaurantEntity() {
-        return restaurantEntity;
-    }
-
-    public void setRestaurantEntity(RestaurantEntity restaurantEntity) {
-        this.restaurantEntity = restaurantEntity;
     }
 
     public Role getRole() {

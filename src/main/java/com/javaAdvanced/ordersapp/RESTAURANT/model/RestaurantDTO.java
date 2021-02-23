@@ -1,7 +1,5 @@
-package com.javaAdvanced.ordersapp.RESTAURANT.controller;
+package com.javaAdvanced.ordersapp.RESTAURANT.model;
 
-import com.javaAdvanced.ordersapp.USER.api.UserDTO;
-import com.javaAdvanced.ordersapp.USER.dao.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class RestaurantDTO {
@@ -10,16 +8,17 @@ public class RestaurantDTO {
     private String description;
     private String email;
     private String password;
+    private long user_id;
 
 
     @Autowired
-    public RestaurantDTO( String name, String location, String description, String email, String password) {
+    public RestaurantDTO(String name, String location, String description, String email, String password, long user_id) {
         this.name        = name;
         this.location    = location;
         this.description = description;
         this.email       = email;
         this.password    = password;
-
+        this.user_id     = user_id;
     }
 
     public String getName() {
@@ -62,6 +61,14 @@ public class RestaurantDTO {
         this.password = password;
     }
 
+    public long getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(long user_id) {
+        this.user_id = user_id;
+    }
+
     @Override
     public String toString() {
         return "RestaurantDTO{" +
@@ -70,6 +77,7 @@ public class RestaurantDTO {
                 ", description='" + description + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
+                ", user_id=" + user_id +
                 '}';
     }
 }

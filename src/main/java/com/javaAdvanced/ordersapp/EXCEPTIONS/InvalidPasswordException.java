@@ -1,4 +1,4 @@
-package com.javaAdvanced.ordersapp.USER.exceptions;
+package com.javaAdvanced.ordersapp.EXCEPTIONS;
 
 public class InvalidPasswordException  extends RuntimeException{
     public InvalidPasswordException(String msg){

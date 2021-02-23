@@ -1,4 +1,4 @@
-package com.javaAdvanced.ordersapp.USER.exceptions;
+package com.javaAdvanced.ordersapp.EXCEPTIONS;
 
 public class UsedEmailException extends RuntimeException{
     public UsedEmailException(String msg){

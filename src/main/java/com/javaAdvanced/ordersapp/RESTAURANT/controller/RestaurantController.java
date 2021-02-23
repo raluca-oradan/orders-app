@@ -1,12 +1,12 @@
 package com.javaAdvanced.ordersapp.RESTAURANT.controller;
 
-import com.javaAdvanced.ordersapp.RESTAURANT.dao.RestaurantEntity;
+import com.javaAdvanced.ordersapp.RESTAURANT.model.RestaurantEntity;
+import com.javaAdvanced.ordersapp.RESTAURANT.model.RestaurantDTO;
 import com.javaAdvanced.ordersapp.RESTAURANT.service.RestaurantService;
-import com.javaAdvanced.ordersapp.USER.api.UserDTO;
+import com.javaAdvanced.ordersapp.USER.model.UserDTO;
 import com.javaAdvanced.ordersapp.USER.dao.Role;
-import com.javaAdvanced.ordersapp.USER.dao.UserEntity;
+import com.javaAdvanced.ordersapp.USER.model.UserEntity;
 import com.javaAdvanced.ordersapp.USER.service.UserService;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
@@ -40,25 +40,18 @@ public class RestaurantController {
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RestaurantDTO restaurant)  {
-        UserDTO user = new UserDTO(restaurant.getEmail(), restaurant.getPassword(), Role.RESTAURANT);
-        userService.createUser(user);
-
-        RestaurantEntity restaurantEntity = new RestaurantEntity();
-        restaurantEntity.setName(restaurant.getName());
-        restaurantEntity.setLocation(restaurant.getLocation());
-        restaurantEntity.setDescription(restaurant.getDescription());
-        restaurantService.createRestaurant(restaurantEntity);
+        UserDTO user = new UserDTO(restaurant.getEmail(), restaurant.getPassword(),Role.RESTAURANT);
+        UserEntity userEntity = userService.createUser(user);
+        restaurantService.createRestaurant(restaurant,userEntity.getId());
         return new ResponseEntity<>("Restaurant created! ", HttpStatus.CREATED);
     }
 
-
-    /*
     @PutMapping("{id}")
     public ResponseEntity<String> updateRestaurant(@PathVariable int id,
-                                                   @RequestBody UserDTO user,
-                                                   @RequestBody RestaurantDTO restaurantrDTO)  {
+                                                   @RequestBody RestaurantDTO restaurant)  {
+        UserDTO user = new UserDTO(restaurant.getEmail(), restaurant.getPassword(),Role.RESTAURANT);
         userService.updateUser(restaurantService.getRestaurantById(id).getUserEntity().getId(),user);
-        restaurantService.updateRestaurant(id,restaurantrDTO);
+        restaurantService.updateRestaurant(id,restaurant);
         return new ResponseEntity<String>("Restaurant updated! ", HttpStatus.OK);
     }
 
@@ -68,7 +61,5 @@ public class RestaurantController {
         restaurantService.deleteRestaurant(id);
         return new ResponseEntity<>("Restaurant deleted! ", HttpStatus.OK);
     }
-    
-     */
 }
 

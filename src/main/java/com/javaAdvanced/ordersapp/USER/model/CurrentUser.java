@@ -1,6 +1,5 @@
 package com.javaAdvanced.ordersapp.USER.model;
 import com.javaAdvanced.ordersapp.USER.dao.Role;
-import com.javaAdvanced.ordersapp.USER.dao.UserEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

@@ -1,4 +1,4 @@
-package com.javaAdvanced.ordersapp.USER.security;
+package com.javaAdvanced.ordersapp.SECURITY;
 
 import com.javaAdvanced.ordersapp.USER.service.AppUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;

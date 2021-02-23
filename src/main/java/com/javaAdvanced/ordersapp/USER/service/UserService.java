@@ -1,13 +1,12 @@
 package com.javaAdvanced.ordersapp.USER.service;
 
-import com.javaAdvanced.ordersapp.USER.api.UserDTO;
-import com.javaAdvanced.ordersapp.USER.dao.UserEntity;
+import com.javaAdvanced.ordersapp.USER.model.UserDTO;
+import com.javaAdvanced.ordersapp.USER.model.UserEntity;
 import com.javaAdvanced.ordersapp.USER.dao.UserRepository;
-import com.javaAdvanced.ordersapp.USER.exceptions.InvalidPasswordException;
-import com.javaAdvanced.ordersapp.USER.exceptions.UsedEmailException;
-import com.javaAdvanced.ordersapp.USER.exceptions.UserNotFoundException;
+import com.javaAdvanced.ordersapp.EXCEPTIONS.InvalidPasswordException;
+import com.javaAdvanced.ordersapp.EXCEPTIONS.UsedEmailException;
+import com.javaAdvanced.ordersapp.EXCEPTIONS.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
