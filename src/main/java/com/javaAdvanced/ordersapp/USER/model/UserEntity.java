@@ -1,6 +1,8 @@
 package com.javaAdvanced.ordersapp.USER.model;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.javaAdvanced.ordersapp.CUSTOMER.model.CustomerEntity;
+import com.javaAdvanced.ordersapp.RESTAURANT.model.RestaurantEntity;
 import com.javaAdvanced.ordersapp.USER.dao.Role;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -28,6 +30,21 @@ public class UserEntity {
     @Column(nullable = false)
     private Role role;
 
+    @OneToOne(
+        mappedBy      = "userEntity",
+        cascade       = CascadeType.REMOVE,
+        orphanRemoval = true,
+        fetch         = FetchType.LAZY
+    )
+    private CustomerEntity customerEntity;
+
+    @OneToOne(
+            mappedBy      = "userEntity",
+            cascade       = CascadeType.REMOVE,
+            orphanRemoval = true,
+            fetch         = FetchType.LAZY
+    )
+    private RestaurantEntity restaurantEntity;
 
     public UserEntity() {
         super();

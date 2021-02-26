@@ -11,6 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 @Component
 public class UserService {
@@ -35,7 +36,19 @@ public class UserService {
     }
 
 
-    private Boolean isPasswordSecure(String password) {
+    public  boolean isEmailValid(String email){
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\."+
+                "[a-zA-Z0-9_+&*-]+)*@" +
+                "(?:[a-zA-Z0-9-]+\\.)+[a-z" +
+                "A-Z]{2,7}$";
+
+        Pattern pat = Pattern.compile(emailRegex);
+        if (email == null)
+            return false;
+        return pat.matcher(email).matches();
+    }
+
+    private boolean isPasswordSecure(String password) {
         if (password.length() < 8) {
             return false;
         }
@@ -59,6 +72,9 @@ public class UserService {
             throw new InvalidPasswordException("The password must contain letters and digits and must be at least " +
                     "8chars long!");
         }
+        if(!isEmailValid(user.getEmail())){
+            throw new UsedEmailException("This email is not valid!");
+        }
         if(userRepository.isEmailAlreadyUsed(user.getEmail())){
             throw new UsedEmailException("This email is already used!");
         }
@@ -78,7 +94,7 @@ public class UserService {
             throw new InvalidPasswordException("The password must contain letters and digits and must be at least " +
                     "8chars long!");
         }
-        userRepository.update(id,userUpdated.getEmail(),userUpdated.getPassword(), userUpdated.getRole().toString());
+        userRepository.update(id,userUpdated.getEmail(),this.passwordEncoder.encode(userUpdated.getPassword()),userUpdated.getRole().ordinal());
     }
 
     public void deleteUser(long id) {

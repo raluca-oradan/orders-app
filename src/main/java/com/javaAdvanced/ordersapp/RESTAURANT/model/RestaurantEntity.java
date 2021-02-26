@@ -29,8 +29,6 @@ public class RestaurantEntity {
     @Column(nullable = false)
     private String description;
 
-
-
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     @JsonIgnore

@@ -3,6 +3,7 @@ package com.javaAdvanced.ordersapp.CUSTOMER.controller;
 import com.javaAdvanced.ordersapp.CUSTOMER.model.CustomerDTO;
 import com.javaAdvanced.ordersapp.CUSTOMER.model.CustomerEntity;
 import com.javaAdvanced.ordersapp.CUSTOMER.service.CustomerService;
+import com.javaAdvanced.ordersapp.EMAIL.service.EmailService;
 import com.javaAdvanced.ordersapp.USER.model.UserDTO;
 import com.javaAdvanced.ordersapp.USER.dao.Role;;
 import com.javaAdvanced.ordersapp.USER.model.UserEntity;
@@ -22,11 +23,15 @@ public class CustomerController {
 
     private UserService userService;
     private CustomerService customerService;
+    private EmailService emailService;
 
     @Autowired
-    public CustomerController(@Lazy UserService userService, @Lazy CustomerService customerService) {
+    public CustomerController(@Lazy UserService userService,
+                              @Lazy CustomerService customerService,
+                              @Lazy EmailService emailService) {
         this.userService     = userService;
         this.customerService = customerService;
+        this.emailService    = emailService;
     }
 
     @GetMapping
@@ -44,6 +49,9 @@ public class CustomerController {
         UserDTO user = new UserDTO(customerDTO.getEmail(), customerDTO.getPassword(),Role.CUSTOMER);
         UserEntity userEntity = userService.createUser(user);
         customerService.createCustomer(customerDTO, userEntity.getId());
+        emailService.sendEmail(customerDTO.getPassword(),
+                         "noreply@notif-order-up.info",
+                       "Dear" + customerDTO.getName()+" welcome!");
         return new ResponseEntity<>("Customer created! ", HttpStatus.CREATED);
     }
 
@@ -52,13 +60,13 @@ public class CustomerController {
                                                  @RequestBody CustomerDTO customer)  {
         UserDTO user = new UserDTO(customer.getEmail(), customer.getPassword(),Role.CUSTOMER);
         userService.updateUser(customerService.getCustomerById(id).getUserEntity().getId(),user);
+        customerService.updateCustomer(id,customer);
         return new ResponseEntity<String>("Customer updated! ", HttpStatus.OK);
     }
 
     @DeleteMapping("{id}")
     public ResponseEntity<String> deleteRCustomer(@PathVariable int id)  {
         userService.deleteUser(customerService.getCustomerById(id).getUserEntity().getId());
-        customerService.deleteCustomer(id);
         return new ResponseEntity<>("Customer deleted! ", HttpStatus.OK);
     }
 }

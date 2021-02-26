@@ -28,7 +28,7 @@ public class CustomerService {
 
         public CustomerEntity getCustomerById(long id) {
             if((!customerRepository.findById(id).isPresent())){
-                throw new UserNotFoundException("User with id " + id + " not found!");
+                throw new UserNotFoundException("Customer with id " + id + " not found!");
             }
             return customerRepository.findById(id).get();
         }

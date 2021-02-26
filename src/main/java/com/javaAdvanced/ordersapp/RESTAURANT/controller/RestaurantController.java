@@ -1,5 +1,6 @@
 package com.javaAdvanced.ordersapp.RESTAURANT.controller;
 
+import com.javaAdvanced.ordersapp.EMAIL.service.EmailService;
 import com.javaAdvanced.ordersapp.RESTAURANT.model.RestaurantEntity;
 import com.javaAdvanced.ordersapp.RESTAURANT.model.RestaurantDTO;
 import com.javaAdvanced.ordersapp.RESTAURANT.service.RestaurantService;
@@ -21,9 +22,12 @@ public class RestaurantController {
 
     private UserService userService;
     private RestaurantService restaurantService;
+    private EmailService emailService;
 
     @Autowired
-    public RestaurantController(@Lazy UserService userService, @Lazy RestaurantService restaurantService) {
+    public RestaurantController(@Lazy UserService userService,
+                                @Lazy RestaurantService restaurantService,
+                                @Lazy EmailService emailService) {
         this.userService = userService;
         this.restaurantService = restaurantService;
     }
@@ -43,6 +47,9 @@ public class RestaurantController {
         UserDTO user = new UserDTO(restaurant.getEmail(), restaurant.getPassword(),Role.RESTAURANT);
         UserEntity userEntity = userService.createUser(user);
         restaurantService.createRestaurant(restaurant,userEntity.getId());
+        emailService.sendEmail(restaurant.getPassword(),
+                "noreply@notif-order-up.info",
+                "Dear" + restaurant.getName()+" welcome!");
         return new ResponseEntity<>("Restaurant created! ", HttpStatus.CREATED);
     }
 
@@ -58,7 +65,6 @@ public class RestaurantController {
     @DeleteMapping("{id}")
     public ResponseEntity<String> deleteRestaurant(@PathVariable int id)  {
         userService.deleteUser(restaurantService.getRestaurantById(id).getUserEntity().getId());
-        restaurantService.deleteRestaurant(id);
         return new ResponseEntity<>("Restaurant deleted! ", HttpStatus.OK);
     }
 }

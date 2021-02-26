@@ -29,7 +29,7 @@ public class RestaurantService {
 
         public RestaurantEntity getRestaurantById(long id) {
             if((!restaurantRepository.findById(id).isPresent())){
-                throw new UserNotFoundException("User with id " + id + " not found!");
+                throw new UserNotFoundException("Restaurant with id " + id + " not found!");
             }
             return restaurantRepository.findById(id).get();
         }
