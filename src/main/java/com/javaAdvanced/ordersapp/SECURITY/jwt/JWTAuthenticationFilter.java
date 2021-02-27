@@ -1,4 +1,4 @@
-package com.javaAdvanced.ordersapp.SECURITY;
+package com.javaAdvanced.ordersapp.SECURITY.jwt;
 
 import com.javaAdvanced.ordersapp.USER.service.AppUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +19,15 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
 
     private JWTprovider jwtProvider;
     private AppUserDetailsService appUserDetailsService;
+    private JWTRedisService jwtRedisService;
 
     @Autowired
-    public JWTAuthenticationFilter(JWTprovider jwtProvider, AppUserDetailsService appUserDetailsService){
+    public JWTAuthenticationFilter(JWTprovider jwtProvider,
+                                   AppUserDetailsService appUserDetailsService,
+                                   JWTRedisService jwtRedisService){
         this.jwtProvider           = jwtProvider;
         this.appUserDetailsService = appUserDetailsService;
+        this.jwtRedisService       = jwtRedisService;
     }
 
     @Override
@@ -33,14 +37,17 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
         try {
 
-            String jwt = this.jwtProvider.getJWTFromRequest(httpServletRequest);
-            if(StringUtils.hasText(jwt) && this.jwtProvider.validateToken(jwt)){
+            String jwt       = this.jwtProvider.getJWTFromRequest(httpServletRequest);
+            String userEmail = jwtRedisService.getUserEmailFromJWT(jwt);
+            if(StringUtils.hasText(jwt) && this.jwtProvider.validateToken(jwt) && !StringUtils.hasText(userEmail)){
 
-                String email = this.jwtProvider.getSubjectFromJWT(jwt);
+                String email            = this.jwtProvider.getSubjectFromJWT(jwt);
                 UserDetails userDetails = appUserDetailsService.loadUserByUsername(email);
+
                 UsernamePasswordAuthenticationToken authentication =
                         new UsernamePasswordAuthenticationToken(userDetails,null,userDetails.getAuthorities());
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpServletRequest));
+
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         } catch (Exception e){

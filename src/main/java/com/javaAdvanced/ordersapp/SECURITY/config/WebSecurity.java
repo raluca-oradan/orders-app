@@ -1,9 +1,14 @@
-package com.javaAdvanced.ordersapp.SECURITY;
+package com.javaAdvanced.ordersapp.SECURITY.config;
 
+import com.javaAdvanced.ordersapp.SECURITY.jwt.JWTAuthenticationFilter;
+import com.javaAdvanced.ordersapp.SECURITY.jwt.JWTRedisService;
+import com.javaAdvanced.ordersapp.SECURITY.jwt.JWTprovider;
 import com.javaAdvanced.ordersapp.USER.service.AppUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,23 +27,27 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-
 public class WebSecurity extends WebSecurityConfigurerAdapter {
 
     private final String[]  WHITE_LIST = {
             "/",
             "/api/v1/login",
             "/api/v1/restaurant/register",
-            "/api/v1/customer/register"
+            "/api/v1/customer/register",
+            "/api/v1/logout"
     };
 
     private AppUserDetailsService appUserDetailsService;
-    private JWTprovider jwtProvider;
+    private JWTprovider           jwtProvider;
+    private JWTRedisService jwtRedisService;
 
     @Autowired
-    public WebSecurity(AppUserDetailsService appUserDetailsService, JWTprovider jwtProvider){
+    public WebSecurity(AppUserDetailsService appUserDetailsService,
+                       JWTprovider jwtProvider,
+                       JWTRedisService jwtRedisService){
         this.appUserDetailsService = appUserDetailsService;
         this.jwtProvider           = jwtProvider;
+        this.jwtRedisService       = jwtRedisService;
     }
 
     @Override
@@ -79,8 +88,10 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public  JWTAuthenticationFilter jwtAuthenticationFilter(){
-        return new JWTAuthenticationFilter(jwtProvider,appUserDetailsService); //verifica tokenul la fiecare request
+    public JWTAuthenticationFilter jwtAuthenticationFilter(){
+        return new JWTAuthenticationFilter(jwtProvider,
+                                           appUserDetailsService,
+                                           jwtRedisService); //verifica tokenul la fiecare request
     }
 }
 

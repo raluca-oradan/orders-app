@@ -1,4 +1,4 @@
-package com.javaAdvanced.ordersapp.SECURITY;
+package com.javaAdvanced.ordersapp.SECURITY.jwt;
 
 import com.javaAdvanced.ordersapp.USER.model.CurrentUser;
 import io.jsonwebtoken.*;
