@@ -38,8 +38,9 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
         try {
 
             String jwt       = this.jwtProvider.getJWTFromRequest(httpServletRequest);
-            String userEmail = jwtRedisService.getUserEmailFromJWT(jwt);
-            if(StringUtils.hasText(jwt) && this.jwtProvider.validateToken(jwt) && !StringUtils.hasText(userEmail)){
+            if(StringUtils.hasText(jwt)
+                    && this.jwtProvider.validateToken(jwt)
+                    && !StringUtils.hasText( jwtRedisService.getUserEmailFromJWT(jwt))){
 
                 String email            = this.jwtProvider.getSubjectFromJWT(jwt);
                 UserDetails userDetails = appUserDetailsService.loadUserByUsername(email);

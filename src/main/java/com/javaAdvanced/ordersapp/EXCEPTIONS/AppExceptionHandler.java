@@ -30,10 +30,10 @@ public class AppExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(apiError3, HttpStatus.NOT_ACCEPTABLE);
     }
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<ApiError> handleGeneralException(Exception e, WebRequest request){
-        ApiError apiError = new ApiError(500, e.getMessage(), request.getContextPath());
-        return new ResponseEntity<>(apiError, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
+//    @ExceptionHandler(Exception.class)
+//    public ResponseEntity<ApiError> handleGeneralException(Exception e, WebRequest request){
+//        ApiError apiError = new ApiError(500, e.getMessage(), request.getContextPath());
+//        return new ResponseEntity<>(apiError, HttpStatus.INTERNAL_SERVER_ERROR);
+//    }
 }
 

@@ -30,6 +30,7 @@ public class RestaurantController {
                                 @Lazy EmailService emailService) {
         this.userService = userService;
         this.restaurantService = restaurantService;
+        this.emailService = emailService;
     }
 
     @GetMapping
