@@ -1,6 +1,6 @@
 package com.javaAdvanced.ordersapp.RESTAURANT.controller;
 
-import com.javaAdvanced.ordersapp.EMAIL.service.EmailService;
+import com.javaAdvanced.ordersapp.EMAIL.EmailService;
 import com.javaAdvanced.ordersapp.RESTAURANT.model.RestaurantEntity;
 import com.javaAdvanced.ordersapp.RESTAURANT.model.RestaurantDTO;
 import com.javaAdvanced.ordersapp.RESTAURANT.service.RestaurantService;
@@ -47,10 +47,9 @@ public class RestaurantController {
     public ResponseEntity<?> register(@RequestBody RestaurantDTO restaurant)  {
         UserDTO user = new UserDTO(restaurant.getEmail(), restaurant.getPassword(),Role.RESTAURANT);
         UserEntity userEntity = userService.createUser(user);
-        restaurantService.createRestaurant(restaurant,userEntity.getId());
-        emailService.sendEmail(restaurant.getPassword(),
-                "noreply@notif-order-up.info",
-                "Dear" + restaurant.getName()+" welcome!");
+        restaurantService.createRestaurant(restaurant,userEntity);
+        emailService.send(restaurant.getEmail(),
+                       "Dear" + restaurant.getName()+" welcome to our application!");
         return new ResponseEntity<>("Restaurant created! ", HttpStatus.CREATED);
     }
 

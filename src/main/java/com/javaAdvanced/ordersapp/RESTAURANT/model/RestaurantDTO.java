@@ -8,17 +8,15 @@ public class RestaurantDTO {
     private String description;
     private String email;
     private String password;
-    private long user_id;
 
 
     @Autowired
-    public RestaurantDTO(String name, String location, String description, String email, String password, long user_id) {
+    public RestaurantDTO(String name, String location, String description, String email, String password) {
         this.name        = name;
         this.location    = location;
         this.description = description;
         this.email       = email;
         this.password    = password;
-        this.user_id     = user_id;
     }
 
     public String getName() {
@@ -61,14 +59,6 @@ public class RestaurantDTO {
         this.password = password;
     }
 
-    public long getUser_id() {
-        return user_id;
-    }
-
-    public void setUser_id(long user_id) {
-        this.user_id = user_id;
-    }
-
     @Override
     public String toString() {
         return "RestaurantDTO{" +
@@ -77,7 +67,6 @@ public class RestaurantDTO {
                 ", description='" + description + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
-                ", user_id=" + user_id +
                 '}';
     }
 }

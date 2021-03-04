@@ -8,16 +8,14 @@ public class CustomerDTO {
     private String address;
     private String email;
     private String password;
-    private long user_id;
 
     @Autowired
-    public CustomerDTO(String name, String phone_number, String address, String email, String password, long user_id) {
+    public CustomerDTO(String name, String phone_number, String address, String email, String password) {
         this.name        = name;
         this.phone_number= phone_number;
         this.address     = address;
         this.email       = email;
         this.password    = password;
-        this.user_id     = user_id;
     }
 
     public String getName() {
@@ -60,14 +58,6 @@ public class CustomerDTO {
         this.password = password;
     }
 
-    public long getUser_id() {
-        return user_id;
-    }
-
-    public void setUser_id(long user_id) {
-        this.user_id = user_id;
-    }
-
     @Override
     public String toString() {
         return "CustomerDTO{" +
@@ -76,7 +66,6 @@ public class CustomerDTO {
                 ", address='" + address + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
-                ", user_id=" + user_id +
                 '}';
     }
 }

@@ -3,7 +3,7 @@ package com.javaAdvanced.ordersapp.CUSTOMER.controller;
 import com.javaAdvanced.ordersapp.CUSTOMER.model.CustomerDTO;
 import com.javaAdvanced.ordersapp.CUSTOMER.model.CustomerEntity;
 import com.javaAdvanced.ordersapp.CUSTOMER.service.CustomerService;
-import com.javaAdvanced.ordersapp.EMAIL.service.EmailService;
+import com.javaAdvanced.ordersapp.EMAIL.EmailService;
 import com.javaAdvanced.ordersapp.USER.model.UserDTO;
 import com.javaAdvanced.ordersapp.USER.dao.Role;;
 import com.javaAdvanced.ordersapp.USER.model.UserEntity;
@@ -48,10 +48,9 @@ public class CustomerController {
     public ResponseEntity<?> register(@RequestBody CustomerDTO customerDTO)  {
         UserDTO user = new UserDTO(customerDTO.getEmail(), customerDTO.getPassword(),Role.CUSTOMER);
         UserEntity userEntity = userService.createUser(user);
-        customerService.createCustomer(customerDTO, userEntity.getId());
-        emailService.sendEmail(customerDTO.getPassword(),
-                         "noreply@notif-order-up.info",
-                       "Dear" + customerDTO.getName()+" welcome!");
+        customerService.createCustomer(customerDTO, userEntity);
+        emailService.send(customerDTO.getEmail(),
+                       "Dear" + customerDTO.getName()+" welcome to our application!");
         return new ResponseEntity<>("Customer created! ", HttpStatus.CREATED);
     }
 

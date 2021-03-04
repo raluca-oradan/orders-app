@@ -4,6 +4,7 @@ import com.javaAdvanced.ordersapp.RESTAURANT.model.RestaurantEntity;
 import com.javaAdvanced.ordersapp.RESTAURANT.dao.RestaurantRepository;
 import com.javaAdvanced.ordersapp.EXCEPTIONS.UserNotFoundException;
 import com.javaAdvanced.ordersapp.USER.dao.UserRepository;
+import com.javaAdvanced.ordersapp.USER.model.UserEntity;
 import com.javaAdvanced.ordersapp.USER.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -34,12 +35,12 @@ public class RestaurantService {
             return restaurantRepository.findById(id).get();
         }
 
-        public RestaurantEntity createRestaurant(RestaurantDTO restaurant,long id)  {
+        public RestaurantEntity createRestaurant(RestaurantDTO restaurant, UserEntity userEntity)  {
             RestaurantEntity r = new RestaurantEntity();
             r.setName(restaurant.getName());
             r.setLocation(restaurant.getLocation());
             r.setDescription(restaurant.getDescription());
-            r.setUserEntity(userService.getUserById(id));
+            r.setUserEntity(userEntity);
             return restaurantRepository.save(r);
         }
 

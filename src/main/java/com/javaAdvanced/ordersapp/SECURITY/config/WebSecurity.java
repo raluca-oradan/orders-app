@@ -7,6 +7,7 @@ import com.javaAdvanced.ordersapp.USER.service.AppUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpMethod;
@@ -44,7 +45,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
     @Autowired
     public WebSecurity(AppUserDetailsService appUserDetailsService,
                        JWTprovider jwtProvider,
-                       JWTRedisService jwtRedisService){
+                       @Lazy JWTRedisService jwtRedisService){
         this.appUserDetailsService = appUserDetailsService;
         this.jwtProvider           = jwtProvider;
         this.jwtRedisService       = jwtRedisService;
@@ -92,6 +93,18 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
         return new JWTAuthenticationFilter(jwtProvider,
                                            appUserDetailsService,
                                            jwtRedisService); //verifica tokenul la fiecare request
+    }
+
+    @Bean
+    public JedisConnectionFactory jedisConnectionFactory(){ //pentru configurarea redisului
+        return new JedisConnectionFactory();
+    }
+
+    @Bean
+    public RedisTemplate<String, String> redisTemplate(){ // clientul
+        RedisTemplate<String, String> redisTemplate = new RedisTemplate<>();
+        redisTemplate.setConnectionFactory(jedisConnectionFactory());
+        return redisTemplate;
     }
 }
 

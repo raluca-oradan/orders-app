@@ -12,17 +12,4 @@ public class OrdersAppApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(OrdersAppApplication.class, args);
 	}
-
-	@Bean
-	public JedisConnectionFactory jedisConnectionFactory(){ //pentru configurarea redisului
-		return new JedisConnectionFactory();
-	}
-
-	@Bean
-	public RedisTemplate<String, String> redisTemplate(){ // clientul
-		RedisTemplate<String, String> redisTemplate = new RedisTemplate<>();
-		redisTemplate.setConnectionFactory(jedisConnectionFactory());
-		return redisTemplate;
-	}
-
 }
