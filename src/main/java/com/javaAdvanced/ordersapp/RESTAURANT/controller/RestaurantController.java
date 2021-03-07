@@ -44,12 +44,12 @@ public class RestaurantController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody RestaurantDTO restaurant)  {
+    public ResponseEntity<String> register(@RequestBody RestaurantDTO restaurant)  {
         UserDTO user = new UserDTO(restaurant.getEmail(), restaurant.getPassword(),Role.RESTAURANT);
         UserEntity userEntity = userService.createUser(user);
         restaurantService.createRestaurant(restaurant,userEntity);
         emailService.send(restaurant.getEmail(),
-                       "Dear" + restaurant.getName()+" welcome to our application!");
+                       "Dear " + restaurant.getName()+" welcome to our application!");
         return new ResponseEntity<>("Restaurant created! ", HttpStatus.CREATED);
     }
 

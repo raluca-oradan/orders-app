@@ -45,12 +45,12 @@ public class CustomerController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody CustomerDTO customerDTO)  {
+    public ResponseEntity<String> register(@RequestBody CustomerDTO customerDTO)  {
         UserDTO user = new UserDTO(customerDTO.getEmail(), customerDTO.getPassword(),Role.CUSTOMER);
         UserEntity userEntity = userService.createUser(user);
         customerService.createCustomer(customerDTO, userEntity);
         emailService.send(customerDTO.getEmail(),
-                       "Dear" + customerDTO.getName()+" welcome to our application!");
+                       "Dear " + customerDTO.getName()+" welcome to our application!");
         return new ResponseEntity<>("Customer created! ", HttpStatus.CREATED);
     }
 

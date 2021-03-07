@@ -35,12 +35,13 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
             "/api/v1/login",
             "/api/v1/restaurant/register",
             "/api/v1/customer/register",
-            "/api/v1/logout"
+            "/api/v1/logout",
+            "api/v1/forgotPassword"
     };
 
     private AppUserDetailsService appUserDetailsService;
     private JWTprovider           jwtProvider;
-    private JWTRedisService jwtRedisService;
+    private JWTRedisService       jwtRedisService;
 
     @Autowired
     public WebSecurity(AppUserDetailsService appUserDetailsService,
