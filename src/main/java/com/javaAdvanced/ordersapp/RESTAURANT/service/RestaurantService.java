@@ -15,13 +15,13 @@ import java.util.List;
 public class RestaurantService {
 
         private RestaurantRepository restaurantRepository;
-        private UserService userService;
+
 
 
         @Autowired
-        public RestaurantService(RestaurantRepository restaurantRepository, UserService userService){
+        public RestaurantService(RestaurantRepository restaurantRepository){
             this.restaurantRepository  = restaurantRepository;
-            this.userService           = userService;
+
         }
 
         public List<RestaurantEntity> getAllRestaurants(){

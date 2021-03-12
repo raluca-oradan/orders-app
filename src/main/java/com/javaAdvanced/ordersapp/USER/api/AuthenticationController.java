@@ -6,6 +6,7 @@ import com.javaAdvanced.ordersapp.USER.model.ForgotPassword;
 import com.javaAdvanced.ordersapp.USER.model.JWTmodel;
 import com.javaAdvanced.ordersapp.USER.model.LoginRequest;
 import com.javaAdvanced.ordersapp.SECURITY.jwt.JWTprovider;
+import com.javaAdvanced.ordersapp.USER.model.ResetPasswordDTO;
 import com.javaAdvanced.ordersapp.USER.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -39,7 +40,10 @@ public class AuthenticationController {
         this.userService           = userService;
         this.jwtRedisService       = jwtRedisService;
         this.emailService          = emailService;
+
     }
+
+
     @PostMapping("/login")
     public ResponseEntity<JWTmodel> login(@RequestBody LoginRequest loginRequest) {
         System.out.println(loginRequest);
@@ -54,19 +58,35 @@ public class AuthenticationController {
         return ResponseEntity.ok(new JWTmodel(jwt));
     }
 
-    @PostMapping("/forgotPassword")
-    public ResponseEntity<String> forgotPassword(@RequestBody ForgotPassword forgotPassword){
-        String newPassword = userService.generateCommonLangPassword();
-        userService.updatePassword(userService.getUserByEmail(forgotPassword.getEmail()),newPassword);
-        emailService.send(forgotPassword.getEmail(),
-                "Your new password is: " + newPassword + "\n" +
-                        "Please reset your password after first login!");
-     return new ResponseEntity <String> ("Email sent!", HttpStatus.OK);
+
+    @PostMapping("/resetPassword")
+    public ResponseEntity resetPassword(@RequestBody ResetPasswordDTO resetPasswordDTO,
+                                        @RequestHeader ("Authorization") String jwt ){
+        String userEmail = tokenProvider.getSubjectFromJWT(jwt);
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        userEmail,
+                        resetPasswordDTO.getCurrentPassword()
+                )
+        );
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        userService.resetPassword(userEmail,resetPasswordDTO.getNewPassword(), resetPasswordDTO.getConfirmedNewPassword());
+        return ResponseEntity.ok().build();
     }
 
 
+    @PostMapping("/forgotPassword")
+        public ResponseEntity forgotPassword(@RequestBody ForgotPassword email){
+        String newPassword = userService.generateCommonLangPassword();
+        userService.getUserByEmail(email.getEmail());
+        userService.resetPassword(email.getEmail(),newPassword, newPassword);
+        emailService.send(email.getEmail(), "Your new password is: " + newPassword + "\n " +
+                          "Please reset it after first login");
+        return  ResponseEntity.ok().build();
+        }
+
     @PostMapping("/logout")
-    public ResponseEntity<String> logout(@RequestHeader ("Authorization") String jwt) {
+        public ResponseEntity<String> logout(@RequestHeader ("Authorization") String jwt) {
         String userEmail = tokenProvider.getSubjectFromJWT(jwt);
         jwtRedisService.invalidateJWT(jwt,userEmail);
         return ResponseEntity.ok().build();

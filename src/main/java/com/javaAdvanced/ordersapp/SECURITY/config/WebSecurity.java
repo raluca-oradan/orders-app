@@ -36,7 +36,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
             "/api/v1/restaurant/register",
             "/api/v1/customer/register",
             "/api/v1/logout",
-            "api/v1/forgotPassword"
+            "/api/v1/forgotPassword"
     };
 
     private AppUserDetailsService appUserDetailsService;

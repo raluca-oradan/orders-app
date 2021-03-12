@@ -15,7 +15,6 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
     @Query(value = "(SELECT CAST (COUNT(*) AS BIT) AS Expr" +
             " FROM users u " +
             "WHERE u.email = :email )", nativeQuery = true)
-
     public Boolean isEmailAlreadyUsed(String email);
 
     @Modifying //e pentru ca modificam starea bazei de date
@@ -26,4 +25,12 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
             " SET email = :userEmail, password = :userPassword, role = :userRole" +
             " WHERE id = :id ", nativeQuery = true)
     public void update(long id, String userEmail, String userPassword, Integer userRole);
+
+
+    @Modifying
+    @Transactional
+    @Query(value = " UPDATE users " +
+            "SET password = :userPassword " +
+            "WHERE email = :userEmail", nativeQuery = true)
+    public void resetPassword(String userEmail, String userPassword);
 }

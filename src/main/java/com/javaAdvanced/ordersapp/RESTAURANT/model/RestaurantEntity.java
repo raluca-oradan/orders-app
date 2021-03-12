@@ -7,6 +7,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
 
 @Entity
 @Table(name = "restaurants")
@@ -33,6 +34,13 @@ public class RestaurantEntity {
     @JoinColumn(name = "user_id")
     @JsonIgnore
     private UserEntity userEntity;
+
+    @OneToMany(mappedBy = "restaurantEntity",
+              cascade = CascadeType.ALL,
+              orphanRemoval = true,
+              fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<FoodCategoryEntity> foodCategoryEntityList;
 
 
     public long getId() {
@@ -81,5 +89,13 @@ public class RestaurantEntity {
 
     public void setUserEntity(UserEntity userEntity) {
         this.userEntity = userEntity;
+    }
+
+    public List<FoodCategoryEntity> getFoodCategoryEntityList() {
+        return foodCategoryEntityList;
+    }
+
+    public void setFoodCategoryEntityList(List<FoodCategoryEntity> foodCategoryEntityList) {
+        this.foodCategoryEntityList = foodCategoryEntityList;
     }
 }

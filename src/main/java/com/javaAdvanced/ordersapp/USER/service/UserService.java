@@ -129,16 +129,34 @@ public class UserService {
                               userUpdated.getRole().ordinal());
     }
 
+    /*
     public void updatePassword(UserEntity userEntity, String newPassword) {
         if(!isPasswordSecure(newPassword)){
             throw new InvalidPasswordException("The password must contain letters and digits and must be at least " +
                     "8chars long!");
         }
-
         userRepository.update(userEntity.getId(),userEntity.getEmail(),
                             this.passwordEncoder.encode(newPassword),
                             userEntity.getRole().ordinal());
     }
+
+
+
+
+
+     */
+
+    public void resetPassword(String email, String newPassword, String confirmedNewPassword){
+        if(!newPassword.equals(confirmedNewPassword)){
+            throw  new InvalidPasswordException("The password are not the same!");
+        }
+        if(!isPasswordSecure(newPassword)){
+            throw new InvalidPasswordException("The password must contain letters and digits and must be at least " +
+                    "8chars long!");
+        }
+        userRepository.resetPassword(email,this.passwordEncoder.encode(newPassword));
+    }
+
 
     public void deleteUser(long id) {
         UserEntity user = getUserById(id);

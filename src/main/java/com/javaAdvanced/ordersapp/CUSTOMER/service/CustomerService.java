@@ -15,12 +15,11 @@ import java.util.List;
 public class CustomerService {
 
         private CustomerRepository customerRepository;
-        private UserService userService;
+
 
         @Autowired
-        public CustomerService(CustomerRepository customerRepository, UserService userService){
+        public CustomerService(CustomerRepository customerRepository){
             this.customerRepository = customerRepository;
-            this.userService        = userService;
         }
 
         public List<CustomerEntity> getAllCustomers(){

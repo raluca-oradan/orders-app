@@ -3,7 +3,11 @@ package com.javaAdvanced.ordersapp.USER.model;
 public class ForgotPassword {
     private String email;
 
-    public ForgotPassword(String email){
+    public ForgotPassword(){
+        super();
+    }
+
+    public ForgotPassword(String email) {
         this.email = email;
     }
 
@@ -13,12 +17,5 @@ public class ForgotPassword {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    @Override
-    public String toString() {
-        return "ForgotPassword{" +
-                "email='" + email + '\'' +
-                '}';
     }
 }
