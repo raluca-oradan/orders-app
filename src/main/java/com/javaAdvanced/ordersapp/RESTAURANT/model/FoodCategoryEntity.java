@@ -1,9 +1,11 @@
 package com.javaAdvanced.ordersapp.RESTAURANT.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
 
 @Entity
 @Table(name = "food_categories")
@@ -18,7 +20,16 @@ public class FoodCategoryEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurant_id")
+    @JsonIgnore
     private RestaurantEntity restaurantEntity;
+
+    @OneToMany(mappedBy = "foodCategoryEntity",
+               cascade  = CascadeType.ALL,
+               orphanRemoval = true,
+               fetch = FetchType.LAZY
+    )
+    @JsonIgnore
+    private List<FoodItemEntity> foodItemEntityList;
 
     public Long getId() {
         return id;
@@ -52,12 +63,11 @@ public class FoodCategoryEntity {
         this.restaurantEntity = restaurantEntity;
     }
 
-    @Override
-    public String toString() {
-        return "FoodCategoryEntity{" +
-                "id=" + id +
-                ", created_at=" + created_at +
-                ", name='" + name + '\'' +
-                '}';
+    public List<FoodItemEntity> getFoodItemEntityList() {
+        return foodItemEntityList;
+    }
+
+    public void setFoodItemEntityList(List<FoodItemEntity> foodItemEntityList) {
+        this.foodItemEntityList = foodItemEntityList;
     }
 }

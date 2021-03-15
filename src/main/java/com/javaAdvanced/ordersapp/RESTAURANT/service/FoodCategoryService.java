@@ -4,9 +4,7 @@ import com.javaAdvanced.ordersapp.EXCEPTIONS.FoodCategoryAlreadyExists;
 import com.javaAdvanced.ordersapp.EXCEPTIONS.FoodCategoryNotFoundException;
 import com.javaAdvanced.ordersapp.RESTAURANT.dao.FoodCategoryRepository;
 import com.javaAdvanced.ordersapp.RESTAURANT.model.FoodCategoryEntity;
-import com.javaAdvanced.ordersapp.RESTAURANT.model.RestaurantEntity;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,7 +22,8 @@ public class FoodCategoryService {
 
 
     public FoodCategoryEntity createFoodCategory(FoodCategoryEntity foodCategoryEntity, long restaurantId)  {
-        if(foodCategoryRepository.findByNameAndRestaurantId(restaurantId,foodCategoryEntity.getName().toLowerCase()).isPresent()){
+        if(foodCategoryRepository.findByNameAndRestaurantId(restaurantId,
+                                                            foodCategoryEntity.getName().toLowerCase()).isPresent()){
             throw new FoodCategoryAlreadyExists("This food category already exists!");
         }
         foodCategoryEntity.setName(foodCategoryEntity.getName().toLowerCase());

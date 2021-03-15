@@ -43,6 +43,7 @@ public class AppExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
 
+
 //    @ExceptionHandler(Exception.class)
 //    public ResponseEntity<ApiError> handleGeneralException(Exception e, WebRequest request){
 //        ApiError apiError = new ApiError(500, e.getMessage(), request.getContextPath());
