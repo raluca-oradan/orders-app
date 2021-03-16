@@ -33,8 +33,8 @@ public class FoodCategoryService {
 
     public List<FoodCategoryEntity> getAllFoodCategories(long restaurantId){
         return foodCategoryRepository.findFoodCategoriesByRestaurantId(restaurantId);
-
     }
+
      public FoodCategoryEntity getFoodCategoryById(long foodCategoryId){
         if(!foodCategoryRepository.findById(foodCategoryId).isPresent()) {
             throw new FoodCategoryNotFoundException("Food category with id " + foodCategoryId + " not found");

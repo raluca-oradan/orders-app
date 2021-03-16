@@ -126,7 +126,7 @@ public class UserService {
         }
         userRepository.update(id,userUpdated.getEmail(),
                               this.passwordEncoder.encode(userUpdated.getPassword()),
-                              userUpdated.getRole().ordinal());
+                              userUpdated.getRole().toString());
     }
 
     /*

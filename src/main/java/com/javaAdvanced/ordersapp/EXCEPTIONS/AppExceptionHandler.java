@@ -42,6 +42,18 @@ public class AppExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(apiError5, HttpStatus.NOT_ACCEPTABLE);
     }
 
+    @ExceptionHandler(FoodItemAlreadyExists.class)
+    public ResponseEntity<ApiError> handleFoodItemAlreadyExistsException(FoodItemAlreadyExists e, WebRequest request){
+        ApiError apiError6 = new ApiError(406, e.getMessage(), request.getContextPath());
+        return new ResponseEntity<>(apiError6, HttpStatus.NOT_ACCEPTABLE);
+    }
+
+    @ExceptionHandler(FoodItemNotFoundException.class)
+    public ResponseEntity<ApiError> handleFoodItemNotFoundException(FoodItemNotFoundException e, WebRequest request){
+        ApiError apiError7 = new ApiError(406, e.getMessage(), request.getContextPath());
+        return new ResponseEntity<>(apiError7, HttpStatus.NOT_ACCEPTABLE);
+    }
+
 
 //    @ExceptionHandler(Exception.class)
 //    public ResponseEntity<ApiError> handleGeneralException(Exception e, WebRequest request){

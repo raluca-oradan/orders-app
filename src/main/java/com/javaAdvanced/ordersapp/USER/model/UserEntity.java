@@ -27,7 +27,9 @@ public class UserEntity {
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role",
+            nullable = false)
     private Role role;
 
     @OneToOne(

@@ -38,6 +38,8 @@ public class RestaurantController {
         this.foodCategoryService    = foodCategoryService;
     }
 
+
+    //RESTAURANTS
     @GetMapping
     public ResponseEntity<List<RestaurantEntity>> getAllRestaurants(){
         return new ResponseEntity<List<RestaurantEntity>>(restaurantService.getAllRestaurants(), HttpStatus.OK);
@@ -73,7 +75,9 @@ public class RestaurantController {
         return new ResponseEntity<>("Restaurant deleted! ", HttpStatus.OK);
     }
 
-    @PostMapping("/{restaurantId}/foodCategories")
+
+    //FOOD_CATEGORIES
+    @PostMapping("/{restaurantId}/foodCategory")
     public ResponseEntity <FoodCategoryEntity> createFoodCategory(@PathVariable int restaurantId,
                                                                   @RequestBody FoodCategoryEntity foodCategoryEntity){
         RestaurantEntity restaurant = restaurantService.getRestaurantById(restaurantId);
@@ -82,20 +86,20 @@ public class RestaurantController {
         return ResponseEntity.ok(foodCategoryEntity);
     }
 
-    @GetMapping("/{restaurantId}/foodCategories/{foodCategoryId}")
+    @GetMapping("/{restaurantId}/foodCategory/{foodCategoryId}")
     public ResponseEntity <FoodCategoryEntity> getFoodCategoryById(@PathVariable int restaurantId,
                                                                    @PathVariable int foodCategoryId){
         restaurantService.getRestaurantById(restaurantId);
         return ResponseEntity.ok(foodCategoryService.getFoodCategoryById(foodCategoryId));
     }
 
-    @GetMapping("/{restaurantId}/foodCategories")
+    @GetMapping("/{restaurantId}/foodCategory")
     public ResponseEntity <List<FoodCategoryEntity>> getAllFoodCategories(@PathVariable int restaurantId){
         restaurantService.getRestaurantById(restaurantId);
         return ResponseEntity.ok(foodCategoryService.getAllFoodCategories(restaurantId));
     }
 
-    @PutMapping("/{restaurantId}/foodCategories/{foodCategoryId}")
+    @PutMapping("/{restaurantId}/foodCategory/{foodCategoryId}")
     public ResponseEntity <String> updateFoodCategory(@PathVariable int restaurantId,
                                                       @RequestBody FoodCategoryEntity foodCategoryEntity,
                                                       @PathVariable int foodCategoryId){
@@ -104,7 +108,7 @@ public class RestaurantController {
         return ResponseEntity.ok("Food category updated!");
     }
 
-    @DeleteMapping("/{restaurantId}/foodCategories/{foodCategoryId}")
+    @DeleteMapping("/{restaurantId}/foodCategory/{foodCategoryId}")
     public ResponseEntity <String> deleteFoodCategory(@PathVariable int restaurantId,
                                                       @PathVariable int foodCategoryId){
         restaurantService.getRestaurantById(restaurantId);
