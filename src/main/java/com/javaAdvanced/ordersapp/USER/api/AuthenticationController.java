@@ -73,8 +73,7 @@ public class AuthenticationController {
         userService.resetPassword(userEmail,resetPasswordDTO.getNewPassword(), resetPasswordDTO.getConfirmedNewPassword());
         return ResponseEntity.ok().build();
     }
-
-
+    
     @PostMapping("/forgotPassword")
         public ResponseEntity forgotPassword(@RequestBody ForgotPassword email){
         String newPassword = userService.generateCommonLangPassword();

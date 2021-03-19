@@ -56,9 +56,7 @@ public class CustomerController {
 
     @PutMapping("{id}")
     public ResponseEntity<String> updateCustomer(@PathVariable int id,
-                                                 @RequestBody CustomerDTO customer)  {
-        UserDTO user = new UserDTO(customer.getEmail(), customer.getPassword(),Role.CUSTOMER);
-        userService.updateUser(customerService.getCustomerById(id).getUserEntity().getId(),user);
+                                                 @RequestBody CustomerEntity customer)  {
         customerService.updateCustomer(id,customer);
         return new ResponseEntity<String>("Customer updated! ", HttpStatus.OK);
     }

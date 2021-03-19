@@ -39,7 +39,7 @@ public class RestaurantEntity {
               cascade = CascadeType.ALL,
               orphanRemoval = true,
               fetch = FetchType.LAZY)
-    @JsonIgnore
+    //@JsonIgnore
     private List<FoodCategoryEntity> foodCategoryEntityList;
 
 

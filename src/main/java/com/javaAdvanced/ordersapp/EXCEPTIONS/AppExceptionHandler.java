@@ -54,6 +54,12 @@ public class AppExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(apiError7, HttpStatus.NOT_ACCEPTABLE);
     }
 
+    @ExceptionHandler(ForbiddenAccesException.class)
+    public ResponseEntity<ApiError> handleForbiddenAccesException(ForbiddenAccesException e, WebRequest request){
+        ApiError apiError8 = new ApiError(403, e.getMessage(), request.getContextPath());
+        return new ResponseEntity<>(apiError8, HttpStatus.FORBIDDEN);
+    }
+
 
 //    @ExceptionHandler(Exception.class)
 //    public ResponseEntity<ApiError> handleGeneralException(Exception e, WebRequest request){

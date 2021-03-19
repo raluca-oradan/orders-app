@@ -28,7 +28,7 @@ public class FoodCategoryEntity {
                mappedBy = "foodCategoryEntity",
                cascade = CascadeType.ALL,
                orphanRemoval = true)
-    @JsonIgnore
+    //@JsonIgnore
     private List<FoodItemEntity> foodItemEntityList;
 
     public Long getId() {
@@ -61,6 +61,14 @@ public class FoodCategoryEntity {
 
     public void setRestaurantEntity(RestaurantEntity restaurantEntity) {
         this.restaurantEntity = restaurantEntity;
+    }
+
+    public List<FoodItemEntity> getFoodItemEntityList() {
+        return foodItemEntityList;
+    }
+
+    public void setFoodItemEntityList(List<FoodItemEntity> foodItemEntityList) {
+        this.foodItemEntityList = foodItemEntityList;
     }
 
     @Override

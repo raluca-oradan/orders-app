@@ -42,7 +42,7 @@ public class CustomerService {
             return customerRepository.save(customerEntity);
         }
 
-        public void updateCustomer(long id, CustomerDTO customerUpdated) {
+        public void updateCustomer(long id, CustomerEntity customerUpdated) {
             CustomerEntity customer = getCustomerById(id);
             customerRepository.update(id,customerUpdated.getName(),customerUpdated.getPhone_number(),
                                         customerUpdated.getAddress());
