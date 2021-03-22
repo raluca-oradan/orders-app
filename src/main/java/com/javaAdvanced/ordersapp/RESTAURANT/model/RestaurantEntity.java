@@ -2,12 +2,14 @@ package com.javaAdvanced.ordersapp.RESTAURANT.model;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.javaAdvanced.ordersapp.ORDER.model.OrderEntity;
 import com.javaAdvanced.ordersapp.USER.model.UserEntity;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "restaurants")
@@ -42,6 +44,8 @@ public class RestaurantEntity {
     //@JsonIgnore
     private List<FoodCategoryEntity> foodCategoryEntityList;
 
+    @OneToMany(mappedBy = "restaurantEntity")
+    private Set<OrderEntity> orderEntitySet;
 
     public long getId() {
         return id;
@@ -97,5 +101,13 @@ public class RestaurantEntity {
 
     public void setFoodCategoryEntityList(List<FoodCategoryEntity> foodCategoryEntityList) {
         this.foodCategoryEntityList = foodCategoryEntityList;
+    }
+
+    public Set<OrderEntity> getOrderEntitySet() {
+        return orderEntitySet;
+    }
+
+    public void setOrderEntitySet(Set<OrderEntity> orderEntitySet) {
+        this.orderEntitySet = orderEntitySet;
     }
 }

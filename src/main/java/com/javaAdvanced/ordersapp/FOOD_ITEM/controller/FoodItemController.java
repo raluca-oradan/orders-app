@@ -29,8 +29,6 @@ public class FoodItemController {
         this.restaurantService   = restaurantService;
     }
 
-
-    //TODO limit this to restaurants only !!!!
     @PostMapping("/{foodCategoryId}/foodItem")
     public ResponseEntity<FoodItemEntity> createFoodItem(@PathVariable int foodCategoryId,
                                                          @RequestBody FoodItemEntity foodItemEntity,

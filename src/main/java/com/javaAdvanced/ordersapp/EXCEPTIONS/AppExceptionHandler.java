@@ -60,6 +60,18 @@ public class AppExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(apiError8, HttpStatus.FORBIDDEN);
     }
 
+    @ExceptionHandler(CustomerNotFoundException.class)
+    public ResponseEntity<ApiError> customerNotFoundException(CustomerNotFoundException e, WebRequest request){
+        ApiError apiError9 = new ApiError(406, e.getMessage(), request.getContextPath());
+        return new ResponseEntity<>(apiError9, HttpStatus.FORBIDDEN);
+    }
+
+    @ExceptionHandler(OrderNotFoundException.class)
+    public ResponseEntity<ApiError> orderNotFoundException(OrderNotFoundException e, WebRequest request){
+        ApiError apiError10 = new ApiError(406, e.getMessage(), request.getContextPath());
+        return new ResponseEntity<>(apiError10, HttpStatus.FORBIDDEN);
+    }
+
 
 //    @ExceptionHandler(Exception.class)
 //    public ResponseEntity<ApiError> handleGeneralException(Exception e, WebRequest request){

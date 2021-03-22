@@ -2,11 +2,13 @@ package com.javaAdvanced.ordersapp.CUSTOMER.model;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.javaAdvanced.ordersapp.ORDER.model.OrderEntity;
 import com.javaAdvanced.ordersapp.USER.model.UserEntity;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Set;
 
 @Entity
 @Table(name = "customers")
@@ -29,12 +31,13 @@ public class CustomerEntity {
     @Column(nullable = false)
     private String address;
 
-
-
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     @JsonIgnore
     private UserEntity userEntity;
+
+    @OneToMany(mappedBy = "customerEntity")
+    Set<OrderEntity> orderEntitySet;
 
     public long getId() {
         return id;
@@ -82,5 +85,13 @@ public class CustomerEntity {
 
     public void setUserEntity(UserEntity userEntity) {
         this.userEntity = userEntity;
+    }
+
+    public Set<OrderEntity> getOrderEntitySet() {
+        return orderEntitySet;
+    }
+
+    public void setOrderEntitySet(Set<OrderEntity> orderEntitySet) {
+        this.orderEntitySet = orderEntitySet;
     }
 }
